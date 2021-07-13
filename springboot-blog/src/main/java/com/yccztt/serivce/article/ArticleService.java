@@ -14,4 +14,7 @@ public interface ArticleService {
 
     Article queryBlogById(String bid);
 
+    Article saveBlog(Article article);
+
+    void deleteBlogById(String bid);
 }

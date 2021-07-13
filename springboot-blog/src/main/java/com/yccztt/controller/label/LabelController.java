@@ -44,7 +44,7 @@ public class LabelController {
     public ResultUtil addLabel(@PathVariable("label") String label) {
         Label labelByName = labelService.queryLabelByName(label);
         if (labelByName==null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String createDate = sdf.format(new Date());
             Label label1 = new Label(UuidUtil.getUUID(),label,createDate,createDate);
             labelService.addLabel(label1);

@@ -3,8 +3,6 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import {mavonEditor} from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
 import './assets/icon/iconfont.css'
 
 // 设置反向代理，前端请求默认发送到 http://localhost:8081/api
@@ -14,7 +12,10 @@ axios.defaults.baseURL = 'http://localhost:8081/api'
 Vue.prototype.$axios = axios
 
 Vue.use(ElementUI);
-Vue.use(mavonEditor);
+
+import { mavonEditor } from "mavon-editor";
+import "mavon-editor/dist/css/index.css";
+Vue.component("mavon-editor", mavonEditor);
 
 Vue.config.productionTip = false
 

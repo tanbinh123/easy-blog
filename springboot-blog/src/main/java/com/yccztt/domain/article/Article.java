@@ -40,6 +40,9 @@ public class Article {
     @Column(name = "content",columnDefinition = "TEXT")
     private String content;
 
+    @Column(name = "markdown_str",columnDefinition = "TEXT")
+    private String markdown_str;
+
     @Column(name = "readable")
     private String readable;
 

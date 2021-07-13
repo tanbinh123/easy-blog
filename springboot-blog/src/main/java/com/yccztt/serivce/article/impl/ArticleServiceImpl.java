@@ -20,11 +20,21 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<Article> queryBlogs() {
-        return articleRepository.findAll();
+        return articleRepository.queryArticlesByReadable("Y");
     }
 
     @Override
     public Article queryBlogById(String bid) {
-        return articleRepository.getById(bid);
+        return articleRepository.getArticleById(bid);
+    }
+
+    @Override
+    public Article saveBlog(Article article) {
+        return articleRepository.save(article);
+    }
+
+    @Override
+    public void deleteBlogById(String bid) {
+        articleRepository.deleteBlog(bid);
     }
 }

@@ -18,6 +18,7 @@ public class ArticleRes {
     private String label;
     private String cover_img;
     private String content;
+    private String markdown_str;
     private String readable;
     private String author;
     private String create_time;

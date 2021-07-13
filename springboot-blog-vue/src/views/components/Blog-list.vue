@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="blog-list" v-for="(item,index) in blogs" :key="index">
-      <div class="title" @click="toBlog(item.id)">
+      <div class="title" @click="toViewBlog(item.id)">
         <el-link class="titlelink" :underline="false">{{item.title}}</el-link>
       </div>
       <div class="info">
@@ -12,7 +12,7 @@
           <el-link style="margin-top:-0.3%;" :underline="false"># {{item.label}}</el-link>
         </span>
       </div>
-      <el-image class="blog-img" fit="cover" :src="item.cover_img" @click="toBlog(item.id)"></el-image>
+      <el-image class="blog-img" fit="cover" :src="item.cover_img" @click="toViewBlog(item.id)"></el-image>
     </div>
   </div>
 </template>
@@ -41,8 +41,8 @@ export default {
         console.log(err);
       })
     },
-    toBlog(id) {
-      console.log(id);
+    toViewBlog(id) {
+      this.$router.push({ path: "/viewBlog", query: { id: id } });
     }
   }
 }

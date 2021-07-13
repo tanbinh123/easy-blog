@@ -18,7 +18,7 @@
     <div class="iconbtn">
       <el-link :underline="false"><i class="iconfont icon-github"></i></el-link>
       <span style="margin-left:10px;margin-right:10px;"></span>
-      <el-link :underline="false"><i class="iconfont icon-jishufuwu"></i></el-link>
+      <el-link :underline="false" href="https://web.okjike.com/me" target="_blank"><i class="iconfont icon-jishufuwu"></i></el-link>
     </div>
     <BlogList v-if="linkType=='index'"></BlogList>
     <Archive v-if="linkType=='archive'"></Archive>
