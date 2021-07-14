@@ -1,13 +1,41 @@
 <template>
-  <div class="b-edit">
-    <mavon-editor
-      style="height: 500px"
-      v-model="content"
-      ref="md"
-      @change="change"
-      @imgAdd="imgAdd"
-    />
-    <button @click="submit">提交</button>
+  <div class="b-box">
+    <div class="title-label">
+      <span style="font-size:22px;float:left">标题：</span>
+      <el-input v-model="title" maxlength="30" size="small" placeholder="请输入内容" 
+                style="width:58%;float:left" show-word-limit></el-input>
+      <span style="font-size:22px;float:left;margin-left:20px;">分类：</span>
+      <el-select v-model="label" placeholder="请选择" size="small" style="float:left;">
+        <el-option
+          v-for="item in labelList"
+          :key="item.label"
+          :label="item.label"
+          :value="item.label">
+        </el-option>
+      </el-select>
+    </div>
+    <div class="cover-img">
+      <el-upload
+        action="#"
+        :auto-upload="false"
+        :on-change="handleChange"
+        :on-remove="handleRemove"
+        :file-list="coverImg"
+        list-type="picture"
+        :limit="1">
+        <el-button size="small" type="primary">点击上传</el-button>
+      </el-upload>
+    </div>
+    <!-- <div class="b-edit">
+      <mavon-editor
+        style="height: 500px"
+        v-model="content"
+        ref="md"
+        @change="change"
+        @imgAdd="imgAdd"
+      />
+      <button @click="submit">提交</button>
+    </div> -->
   </div>
 </template>
 
@@ -16,6 +44,19 @@ export default {
   name: "EditBlog",
   data() {
     return {
+      //标题
+      title:'',
+      //标签
+      label: '',
+      labelList:[{
+        label: '黄金糕'
+      }, {
+        label: '双皮奶'
+      }, {
+        label: '蚵仔煎'
+      }],
+      //封面图
+      coverImg: [],
       content: "",
       html: "",
       configs: {},
@@ -28,8 +69,15 @@ export default {
       },
     };
   },
-  created() {},
   methods: {
+    //上传封面图后方法
+    handleChange(file) {
+      console.log(file);
+    },
+    //删除图片方法
+    handleRemove(file) {
+      console.log(file);
+    },
     // 将图片上传到服务器，返回地址替换到md中
     imgAdd(pos, $file) {
       let formdata = new FormData();
@@ -75,9 +123,25 @@ export default {
 </script>
 
 <style>
+.b-box {
+  background: skyblue;
+  margin-top: 30px;
+  margin-left: 19%;
+  width: 60%;
+  height: 80vh;
+}
+.title-label {
+  width: 100%;
+  height: 35px;
+}
+.cover-img {
+  background: red;
+  width: 100%;
+  height: 100px;
+}
 .b-edit {
   height: 600px;
-  width: 960px;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
