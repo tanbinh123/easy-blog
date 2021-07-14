@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-card class="box-card">
+        <el-button size="mini" style="float:left;" @click.native.prevent="editBlog()">添加文章</el-button>
         <el-table class="blog-box" :data="list" stripe style="width: 100%;" height="350">
             <el-table-column prop="title" label="标题">
               <template slot-scope="scope">
@@ -50,7 +51,13 @@ export default {
       this.$router.push({ path: "/viewBlog", query: { id: row.id } });
     },
     editBlog(row) {
-      this.$router.push('/editBlog');
+      if(row!=null) {
+        console.log("edit");
+        this.$router.push('/editBlog');
+      } else {
+        console.log("add");
+        this.$router.push('/editBlog');
+      }
     },
     deleteBlog(row) {
       this.$alert('确认删除：'+row.title+ ' 这条博客?', '删除博客', {
