@@ -2,10 +2,10 @@
   <div class="b-box">
     <div class="title-label">
       <span style="font-size:22px;float:left">标题：</span>
-      <el-input v-model="title" maxlength="30" size="small" placeholder="请输入内容" 
+      <el-input v-model="saveData.title" maxlength="30" size="small" placeholder="请输入内容" 
                 style="width:58%;float:left" show-word-limit></el-input>
       <span style="font-size:22px;float:left;margin-left:20px;">分类：</span>
-      <el-select v-model="label" placeholder="请选择" size="small" style="float:left;">
+      <el-select v-model="saveData.label" placeholder="请选择" size="small" style="float:left;">
         <el-option
           v-for="item in labelList"
           :key="item.label"
@@ -16,26 +16,31 @@
     </div>
     <div class="cover-img">
       <el-upload
+        class="upload-style"
         action="#"
         :auto-upload="false"
         :on-change="handleChange"
         :on-remove="handleRemove"
-        :file-list="coverImg"
+        :file-list="coverImgList"
         list-type="picture"
         :limit="1">
-        <el-button size="small" type="primary">点击上传</el-button>
+        <el-button class="upload-button" size="small" type="primary">点击上传</el-button>
       </el-upload>
     </div>
-    <!-- <div class="b-edit">
+    <div>
+      <span style="font-size:22px;">文章内容</span>
       <mavon-editor
-        style="height: 500px"
+        class="md-box"
         v-model="content"
         ref="md"
         @change="change"
         @imgAdd="imgAdd"
       />
-      <button @click="submit">提交</button>
-    </div> -->
+    </div>
+    <el-button style="margin-top:50px;" size="small" type="primary">发布</el-button>
+    <div class="show-bottom">
+      <span>Powered by YCCZTT</span>
+    </div>
   </div>
 </template>
 
@@ -44,10 +49,6 @@ export default {
   name: "EditBlog",
   data() {
     return {
-      //标题
-      title:'',
-      //标签
-      label: '',
       labelList:[{
         label: '黄金糕'
       }, {
@@ -56,67 +57,35 @@ export default {
         label: '蚵仔煎'
       }],
       //封面图
-      coverImg: [],
-      content: "",
-      html: "",
-      configs: {},
-      saveDate: {
-        id: "",
-        content: "",
-        createTime: "",
-        updateTime: "",
-        isDelete: 0,
-      },
+      coverImgList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+      saveData:{
+        //标题
+        title:'',
+        //标签
+        label: '',
+        //首图
+        converImgUrl:'',
+      }
     };
   },
   methods: {
     //上传封面图后方法
     handleChange(file) {
-      console.log(file);
+      let formdata = new FormData();
+      formdata.append("image", file.raw);
+      this.$axios.post("/file/uploadImg", formdata).then((res) => {
+        if (res.data.code === 200) {
+          this.saveData.converImgUrl = res.data.url
+        } else {
+          this.$message.error(res.data.msg);
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
     },
     //删除图片方法
     handleRemove(file) {
-      console.log(file);
-    },
-    // 将图片上传到服务器，返回地址替换到md中
-    imgAdd(pos, $file) {
-      let formdata = new FormData();
-      formdata.append("image", $file);
-      //访问后台服务器方法
-      this.$axios
-        .post("/blog/uploadImg", formdata)
-        .then((response) => {
-          if (response.data.code === 200) {
-            this.$refs.md.$img2Url(pos, response.data.url);
-          } else {
-            this.$message.error(response.data.msg);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    change(value, render) {
-      this.html = render;
-      console.log(this.$refs.md.d_render);
-      console.log(this.$refs.md.d_value);
-    },
-    // 提交
-    submit() {
-      this.saveDate.content = this.html;
-      this.$axios
-        .post("/blog/edit", this.saveDate)
-        .then((response) => {
-          if (response.data.code === 200) {
-            alert("保存成功");
-            this.$router.push("/");
-          } else {
-            alert("保存失败");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      //console.log(file);
     },
   },
 };
@@ -128,22 +97,35 @@ export default {
   margin-top: 30px;
   margin-left: 19%;
   width: 60%;
-  height: 80vh;
 }
 .title-label {
   width: 100%;
   height: 35px;
 }
 .cover-img {
-  background: red;
   width: 100%;
-  height: 100px;
+  height: 120px;
 }
-.b-edit {
-  height: 600px;
+.upload-style {
   width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+.el-upload-list {
+  position: absolute;
+  width: 51%;
+  margin-top: -75px;
+}
+.upload-button {
+  position: relative;
+  margin-left: 740px;
+  margin-top: 45px;
+}
+.md-box {
+  width: 100%;
+  height: 80vh;
+}
+.show-bottom {
+  color:#909399;
+  margin-top: 8%;
+  height: 60px;
 }
 </style>
