@@ -52,10 +52,8 @@ export default {
     },
     editBlog(row) {
       if(row!=null) {
-        console.log("edit");
-        this.$router.push('/editBlog');
+        this.$router.push({ path: "/editBlog", query: { id: row.id } });
       } else {
-        console.log("add");
         this.$router.push('/editBlog');
       }
     },

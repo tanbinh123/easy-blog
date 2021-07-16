@@ -31,13 +31,15 @@
       <span style="font-size:22px;">文章内容</span>
       <mavon-editor
         class="md-box"
-        v-model="content"
+        v-model="mdcontent"
         ref="md"
-        @change="change"
-        @imgAdd="imgAdd"
+        @imgAdd="mdAddImg"
       />
     </div>
-    <el-button style="margin-top:50px;" size="small" type="primary">发布</el-button>
+    <div>
+      <el-button style="margin-top:50px;" size="small" type="warning" @click="toIndex()">取消</el-button>
+      <el-button style="margin-top:50px;" size="small" type="primary" @click="saveBlog()">发布</el-button>
+    </div>
     <div class="show-bottom">
       <span>Powered by YCCZTT</span>
     </div>
@@ -49,51 +51,132 @@ export default {
   name: "EditBlog",
   data() {
     return {
-      labelList:[{
-        label: '黄金糕'
-      }, {
-        label: '双皮奶'
-      }, {
-        label: '蚵仔煎'
-      }],
+      labelList:[],
       //封面图
-      coverImgList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+      coverImgList: [],
+      //md文本
+      mdcontent:'',
       saveData:{
+        id:'',
         //标题
         title:'',
         //标签
         label: '',
         //首图
-        converImgUrl:'',
+        cover_img:'',
+        //html文本
+        content:'',
+        //md文本
+        markdown_str:'',
+        reading:0,
+        readable:'Y',
+        author:'yccztt',
+        create_time:'',
+        update_time:''
       }
     };
   },
+  created() {
+    this.initBlog()
+    this.getLabelList()
+  },
   methods: {
+    //初始化文章：新增/编辑
+    initBlog() {
+      if(this.$route.query.id) {
+        this.$axios.post('/article/blogs',this.$route.query.id,{headers:{'Content-Type': 'application/json'}}).then(res => {
+          let result = res.data
+          if(result.code == 200) {
+            this.saveData = result.data
+            this.$refs.md.d_render = result.data.content
+            this.$refs.md.d_value = result.data.markdown_str
+
+            var cover_img = result.data.cover_img
+            var coverName = cover_img.substr(cover_img.lastIndexOf("/") + 1)
+            this.coverImgList.push({
+              name:coverName,
+              url:result.data.cover_img,
+            })
+          } else {
+            console.log(result.msg)
+          }
+        }).catch(err => {
+          console.log(err);
+        })
+      }
+    },
+    //获取分类
+    getLabelList() {
+      this.$axios.get('/label/list').then(res => {
+          let result = res.data
+          if(result.code == 200) {
+              this.labelList = result.data
+          } else {
+              console.log(result.msg)
+          }
+      }).catch(err => {
+          console.log(err)
+      })
+    },
     //上传封面图后方法
     handleChange(file) {
       let formdata = new FormData();
       formdata.append("image", file.raw);
       this.$axios.post("/file/uploadImg", formdata).then((res) => {
         if (res.data.code === 200) {
-          this.saveData.converImgUrl = res.data.url
+          this.saveData.cover_img = res.data.url
         } else {
-          this.$message.error(res.data.msg);
+          this.$message.error(res.data.msg)
         }
       }).catch((err) => {
-        console.log(err);
+        console.log(err)
       });
     },
     //删除图片方法
     handleRemove(file) {
-      //console.log(file);
+      //console.log(file)
     },
+    //文本编辑器上传图片
+    mdAddImg(pos, $file) {
+      let formdata = new FormData();
+      formdata.append("image", $file);
+      this.$axios.post("/file/uploadImg",formdata).then((res) => {
+        if (res.data.code === 200) {
+          this.$refs.md.$img2Url(pos, res.data.url)
+        } else {
+          this.$message.error(res.data.msg)
+        }
+      }).catch((err) => {
+        console.log(err)
+      });
+    },
+    toIndex() {
+      this.$router.go(-1)
+    },
+    //保存博客
+    saveBlog() {
+      this.saveData.content = this.$refs.md.d_render
+      this.saveData.markdown_str = this.$refs.md.d_value
+      this.$axios.post("/article/save", this.saveData).then((res) => {
+        if (res.data.code === 200) {
+          this.$message({
+            type: 'success',
+            message: res.data.msg
+          });
+          this.$router.go(-1)
+        } else {
+          this.$message.error(res.data.msg)
+        }
+      }).catch((err) => {
+        console.log(err)
+      });
+    }
   },
 };
 </script>
 
 <style>
 .b-box {
-  background: skyblue;
   margin-top: 30px;
   margin-left: 19%;
   width: 60%;

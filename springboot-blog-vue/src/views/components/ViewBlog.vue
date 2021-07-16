@@ -80,6 +80,7 @@ export default {
   height: 370px;
 }
 .content-box {
+  text-align: left;
   margin-top: 20px;
   width: 100%;
 }
