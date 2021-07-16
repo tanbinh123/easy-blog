@@ -37,4 +37,9 @@ public class ArticleServiceImpl implements ArticleService {
     public void deleteBlogById(String bid) {
         articleRepository.deleteBlog(bid);
     }
+
+    @Override
+    public void addReading(String bid) {
+        articleRepository.addReading(bid);
+    }
 }

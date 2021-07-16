@@ -17,4 +17,6 @@ public interface ArticleService {
     Article saveBlog(Article article);
 
     void deleteBlogById(String bid);
+
+    void addReading(String bid);
 }

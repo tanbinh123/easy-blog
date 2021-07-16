@@ -24,4 +24,8 @@ public interface ArticleRepository extends JpaRepository<Article,String>, JpaSpe
     @Query(value = "UPDATE b_article SET readable = 'N' WHERE id =?1",nativeQuery = true)
     void deleteBlog(String bid);
 
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE b_article SET reading = reading + 1  WHERE id =?1",nativeQuery = true)
+    void addReading(String bid);
 }
