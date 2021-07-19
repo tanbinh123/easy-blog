@@ -12,6 +12,8 @@ public interface ArticleService {
 
     List<Article> queryBlogs();
 
+    List<Article> queryBlogsByLabel(String label);
+
     Article queryBlogById(String bid);
 
     Article saveBlog(Article article);

@@ -24,6 +24,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<Article> queryBlogsByLabel(String label) {
+        return articleRepository.queryArticlesByLabelAndReadable(label,"Y");
+    }
+
+    @Override
     public Article queryBlogById(String bid) {
         return articleRepository.getArticleById(bid);
     }

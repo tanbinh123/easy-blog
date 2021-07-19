@@ -30,6 +30,7 @@ public class ArticleController {
      */
     @GetMapping("/list")
     public ResultUtil queryBlogs() {
+        System.out.println("查询所有博客：queryBlogs");
         List<Article> articles = articleService.queryBlogs();
         return ResultUtil.success(articles);
     }
@@ -41,10 +42,23 @@ public class ArticleController {
      */
     @PostMapping("/blogs")
     public ResultUtil queryBlogById(@RequestBody String id) {
+        System.out.println("根据ID查询博客====> queryBlogById："+id);
         //查看后阅读量+1
         articleService.addReading(id);
         Article article = articleService.queryBlogById(id);
         return ResultUtil.success(article);
+    }
+
+    /**
+     * 根据标签查询博客
+     * @param label
+     * @return
+     */
+    @PostMapping("/blogs/label")
+    public ResultUtil queryBlogByLabel(@RequestBody String label) {
+        System.out.println("根据标签查询博客====> queryBlogByLabel："+label);
+        List<Article> articles = articleService.queryBlogsByLabel(label);
+        return ResultUtil.success(articles);
     }
 
     /**
@@ -53,6 +67,7 @@ public class ArticleController {
      */
     @PostMapping("/save")
     public ResultUtil saveBlog(@RequestBody ArticleRes articleRes) {
+        System.out.println("保存/修改博客====> saveBlog："+articleRes);
         String id = articleRes.getId();
 
         //更新时间
@@ -87,6 +102,7 @@ public class ArticleController {
      */
     @PostMapping("/delete")
     public ResultUtil deleteBlogById(@RequestBody String bid) {
+        System.out.println("删除博客====> deleteBlogById："+bid);
         articleService.deleteBlogById(bid);
         return ResultUtil.success();
     }

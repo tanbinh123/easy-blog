@@ -19,6 +19,8 @@ public interface ArticleRepository extends JpaRepository<Article,String>, JpaSpe
 
     List<Article> queryArticlesByReadable(String isReadable);
 
+    List<Article> queryArticlesByLabelAndReadable(String label,String readable);
+
     @Transactional
     @Modifying
     @Query(value = "UPDATE b_article SET readable = 'N' WHERE id =?1",nativeQuery = true)
