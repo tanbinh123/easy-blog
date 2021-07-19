@@ -1,7 +1,7 @@
 <template>
   <div>
       <div class="label-list">
-        <el-tag class="labels" v-for="label in labels" :key="label.label" type="info" closable size="medium" @close="deleteLabel(label.id)">
+        <el-tag class="labels" v-for="label in labels" :key="label.label" type="info" closable size="medium" @close="deleteLabel(label.id,label.label)">
             {{label.label}}
         </el-tag>
         <el-button class="button-new-tag" size="small" @click="newLabel">+ New Label</el-button>
@@ -64,8 +64,8 @@ export default {
           });       
         });
     },
-    deleteLabel(labelId) {
-        this.$axios.get('/label/delete/'+labelId,{headers:{'Content-Type': 'application/json'}}).then(res => {
+    deleteLabel(labelId,labelName) {
+        this.$axios.get('/label/delete/'+labelId+'/'+labelName,{headers:{'Content-Type': 'application/json'}}).then(res => {
             if(res.data.code == 200){
               this.$message({
                 type: 'success',
@@ -75,7 +75,7 @@ export default {
             } else {
               this.$message({
                 type: 'warning',
-                message: '删除标签失败'
+                message: res.data.message
               });
             }
         }).catch(err => {
