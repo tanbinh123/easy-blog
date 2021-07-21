@@ -67,7 +67,7 @@ public class ArticleController {
      */
     @PostMapping("/save")
     public ResultUtil saveBlog(@RequestBody ArticleRes articleRes) {
-        System.out.println("保存/修改博客====> saveBlog："+articleRes);
+        System.out.println("保存/修改博客====> saveBlog");
         String id = articleRes.getId();
 
         //更新时间
