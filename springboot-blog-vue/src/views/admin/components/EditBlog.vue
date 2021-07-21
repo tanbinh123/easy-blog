@@ -98,7 +98,7 @@ export default {
               url:result.data.cover_img,
             })
           } else {
-            console.log(result.msg)
+            console.log(result.message)
           }
         }).catch(err => {
           console.log(err);
@@ -112,7 +112,7 @@ export default {
           if(result.code == 200) {
               this.labelList = result.data
           } else {
-              console.log(result.msg)
+              console.log(result.message)
           }
       }).catch(err => {
           console.log(err)
@@ -126,7 +126,7 @@ export default {
         if (res.data.code === 200) {
           this.saveData.cover_img = res.data.url
         } else {
-          this.$message.error(res.data.msg)
+          this.$message.error(res.data.message)
         }
       }).catch((err) => {
         console.log(err)
@@ -144,7 +144,7 @@ export default {
         if (res.data.code === 200) {
           this.$refs.md.$img2Url(pos, res.data.url)
         } else {
-          this.$message.error(res.data.msg)
+          this.$message.error(res.data.message)
         }
       }).catch((err) => {
         console.log(err)
@@ -161,11 +161,11 @@ export default {
         if (res.data.code === 200) {
           this.$message({
             type: 'success',
-            message: res.data.msg
+            message: res.data.message
           });
           this.$router.go(-1)
         } else {
-          this.$message.error(res.data.msg)
+          this.$message.error(res.data.message)
         }
       }).catch((err) => {
         console.log(err)

@@ -17,22 +17,22 @@ export default new Router({
       component: Index
     },
     {
-      path: '/admin',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/management',
-      name: 'Management',
-      component: Management
-    },
-    {
       path: '/viewBlog',
       name: 'ViewBlog',
       component: ViewBlog
     },
     {
-      path: '/editBlog',
+      path: '/goToAdmin',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/admin/management',
+      name: 'Management',
+      component: Management
+    },
+    {
+      path: '/admin/editBlog',
       name: 'EditBlog',
       component: EditBlog
     }

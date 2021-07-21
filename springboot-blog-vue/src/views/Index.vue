@@ -16,7 +16,7 @@
       <el-link class="link" :underline="false" @click="changeType('about')">关于</el-link>
     </div>
     <div class="iconbtn">
-      <el-link :underline="false"><i class="iconfont icon-github"></i></el-link>
+      <el-link :underline="false" href="https://github.com/"><i class="iconfont icon-github"></i></el-link>
       <span style="margin-left:10px;margin-right:10px;"></span>
       <el-link :underline="false" href="https://web.okjike.com/me" target="_blank"><i class="iconfont icon-jishufuwu"></i></el-link>
     </div>
@@ -79,7 +79,7 @@ export default {
   }
   .show-bottom {
     color:#909399;
-    margin-top: 8%;
+    margin-top: 6%;
     margin-bottom: 3%;
   }
 </style>

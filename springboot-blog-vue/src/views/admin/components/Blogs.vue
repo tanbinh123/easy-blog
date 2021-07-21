@@ -41,7 +41,7 @@ export default {
             if(result.code == 200) {
                 this.list = result.data
             } else {
-                console.log(result.msg)
+                console.log(result.message)
             }
         }).catch(err => {
             console.log(err)
@@ -52,9 +52,9 @@ export default {
     },
     editBlog(row) {
       if(row!=null) {
-        this.$router.push({ path: "/editBlog", query: { id: row.id } });
+        this.$router.push({ path: "/admin/editBlog", query: { id: row.id } });
       } else {
-        this.$router.push('/editBlog');
+        this.$router.push('/admin/editBlog');
       }
     },
     deleteBlog(row) {

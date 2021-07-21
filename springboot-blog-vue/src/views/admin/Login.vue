@@ -32,7 +32,7 @@
         this.$axios.post('/user/login',this.loginForm).then(res => {
             var result =  res.data
             if (result.code === 200) {
-              this.$router.push({path:'/management',query: {id:result.data.id}})
+              this.$router.push({path:'/admin/management',query: {id:result.data.id}})
             } else {
               this.$message({
                 message: result.message,
