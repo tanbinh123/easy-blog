@@ -2,6 +2,7 @@ package com.yccztt.controller.file;
 
 import com.yccztt.utils.ResultUtil;
 import com.yccztt.utils.UuidUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,12 @@ import java.util.Date;
 @RequestMapping("/api/file")
 public class FileController {
 
+    @Value("${upload-file-path}")
+    private String filepath;
+
+    @Value("${linux-url}")
+    private String linuxURL;
+
     /**
      * 上传图片
      * @param image
@@ -33,7 +40,8 @@ public class FileController {
     public ResultUtil uploadImg(@RequestParam("image") MultipartFile image, HttpServletRequest request) throws IOException {
         //上传路径保存设置
         //获得SpringBoot当前项目的路径：System.getProperty("user.dir")
-        String basePath = System.getProperty("user.dir")+"/upload/blog/";
+        //String basePath = System.getProperty("user.dir")+"/upload/blog/";
+        String basePath = filepath+"blog/";
 
         //添加新增日期文件夹区分
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -56,7 +64,8 @@ public class FileController {
             //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
             image.transferTo(newFile);
 
-            String img_url = "http://localhost:8081/upload/blog/"+filePath+"/"+ imgName;
+            //String img_url = "http://localhost:8081/upload/blog/"+filePath+"/"+ imgName;
+            String img_url = linuxURL+"upload/blog/"+filePath+"/"+ imgName;
             return ResultUtil.success().put("url", img_url);
         } catch (IOException e){
             return ResultUtil.error(e);

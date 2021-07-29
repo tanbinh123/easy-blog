@@ -1,5 +1,6 @@
 package com.yccztt.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -11,6 +12,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    @Value("${upload-file-path}")
+    private String filepath;
 
     /**
      * 跨域配置
@@ -36,7 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
         //将物理地质upload文将映射到/upload
         //访问地址:http://域名/upload/文件名
         registry.addResourceHandler("/upload/**")
-                .addResourceLocations("file:"+System.getProperty("user.dir")+"/upload/");
+                .addResourceLocations("file:"+filepath);
     }
 
 }
