@@ -1,7 +1,8 @@
 <template>
   <div>
     <div style="margin-top:50px;">
-      <el-avatar :size="120" src="http://localhost:8081/upload/avatar/avatar.jpg"></el-avatar>
+       <!-- <el-avatar :size="120" src="http://ip地址:8081/upload/avatar/avatar.jpg"></el-avatar> -->
+       <el-avatar :size="120" src="http://localhost:8081/upload/avatar/avatar.jpg"></el-avatar>
     </div>
     <div class="sname">
       <el-link style="font-size:30px;font-weight:bold;" :underline="false" @click="editUser">YCCZTT</el-link>

@@ -1,6 +1,7 @@
 <template>
   <div>
     <div style="margin-top:50px;">
+      <!-- <el-avatar :size="120" src="http://ip地址:8081/upload/avatar/avatar.jpg"></el-avatar> -->
       <el-avatar :size="120" src="http://localhost:8081/upload/avatar/avatar.jpg"></el-avatar>
     </div>
     <div class="sname">

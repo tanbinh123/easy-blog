@@ -7,7 +7,10 @@ import './assets/icon/iconfont.css'
 
 // 设置反向代理，前端请求默认发送到 http://localhost:8081/api
 var axios = require('axios')
+//本地测试
 axios.defaults.baseURL = 'http://localhost:8081/api'
+//服务器使用
+//axios.defaults.baseURL = 'http://ip地址:8081/api'
 // 全局注册，之后可在其他组件中通过 this.$axios 发送数据
 Vue.prototype.$axios = axios
 
